@@ -6,25 +6,25 @@ extern "C" {
 #define TLIB_DOUBLE_LINKED_LIST
 
 //data
-struct tt_node
+struct T_node
 {
 	void *last;
 	void *next;
 	void *data; //pointer to some data that is organized by the list
-} typedef tt_node;
+} typedef T_node;
 
 //functions
 //returns NULL if reached the end of the list
-tt_node* tt_list_next_node(tt_node *current_node);
+T_node* T_list_next_node(T_node *current_node);
 
-tt_node* tt_list_last_node(tt_node *current_node);
+T_node* T_list_last_node(T_node *current_node);
 
 //creates a new node after the current one
-tt_node* tt_list_new_node(tt_node *current_node);
+T_node* T_list_new_node(T_node *current_node);
 
-void tt_list_remove_node(tt_node **current_node);
+void T_list_remove_node(T_node **current_node);
 
-void tt_list_node_set_data(tt_node *current_node, void *data);
+void T_list_node_set_data(T_node *current_node, void *data);
 
 #endif /* TLIB_DOUBLE_LINKED_LIST */
 
@@ -34,12 +34,12 @@ void tt_list_node_set_data(tt_node *current_node, void *data);
 #include <stdlib.h>
 
 //returns NULL if reached the end of the list
-tt_node* tt_list_next_node(tt_node *current_node)
+T_node* T_list_next_node(T_node *current_node)
 {
 	return current_node->next;
 }
 
-tt_node* tt_list_last_node(tt_node *current_node)
+T_node* T_list_last_node(T_node *current_node)
 {
 	if(!current_node->last)
 	{
@@ -49,16 +49,16 @@ tt_node* tt_list_last_node(tt_node *current_node)
 }
 
 //creates a new node after the current one
-tt_node* tt_list_new_node(tt_node *current_node)
+T_node* T_list_new_node(T_node *current_node)
 {
-	tt_node *node=NULL;
-	node=malloc(sizeof(tt_node));
+	T_node *node=NULL;
+	node=malloc(sizeof(T_node));
 	node->data=NULL;
 
 	//if there is no current node yet (NULL as input)
 	if(!current_node)
 	{
-		tt_node *node=malloc(sizeof(tt_node));
+		T_node *node=malloc(sizeof(T_node));
 		node->last=NULL;
 		node->next=NULL;
 		node->data=NULL;
@@ -87,16 +87,16 @@ tt_node* tt_list_new_node(tt_node *current_node)
 	node->next=current_node->next;
 	current_node->next=node;
 	node->last=current_node;
-	tt_node *following=node->next;
+	T_node *following=node->next;
 	following->last=node;
 	return node;
 }
 
 //moves current node to the next node after deletion
 //becomes NULL if there are no nodes left
-void tt_list_remove_node(tt_node **current_node)
+void T_list_remove_node(T_node **current_node)
 {
-	tt_node *node;
+	T_node *node;
 
 	//if first node
 	if(!(*current_node)->last && (*current_node)->next)
@@ -138,7 +138,7 @@ void tt_list_remove_node(tt_node **current_node)
 	return;
 }
 
-void tt_list_node_set_data(tt_node *current_node, void *data)
+void T_list_node_set_data(T_node *current_node, void *data)
 {
 	current_node->data=data;
 }

@@ -22,9 +22,12 @@ T_node* T_list_last_node(T_node *current_node);
 //creates a new node after the current one
 T_node* T_list_new_node(T_node *current_node);
 
+void T_list_move_node_after(T_node *current_node, T_node *target_node);
+
 void T_list_remove_node(T_node **current_node);
 
 void T_list_node_set_data(T_node *current_node, void *data);
+void* T_list_node_get_data(T_node *current_node);
 
 #endif /* TLIB_DOUBLE_LINKED_LIST */
 
@@ -92,6 +95,65 @@ T_node* T_list_new_node(T_node *current_node)
 	return node;
 }
 
+//moves the current node behind the target node
+void T_list_move_node_after(T_node *current_node, T_node *target_node)
+{
+	T_node *node=NULL;
+
+	//safe guards to avoid segfaults
+	if(!current_node)
+	{
+		return;
+	}
+	if(current_node->last==NULL &&
+		current_node->next==NULL)
+	{
+		return;
+	}
+	if(!target_node)
+	{
+		return;
+	}
+	if(target_node->last==NULL &&
+		target_node->next==NULL)
+	{
+		return;
+	}
+
+
+	//if it's the last node that is moved after the second last node
+	if(current_node->next==NULL)
+	{
+		return; //trivial solution
+	}
+
+	//default case
+	if(current_node->last)
+	{
+		node=(T_node*)current_node->last;
+		node->next=current_node->next;
+	}
+
+	node=(T_node*)current_node->next;
+	if(current_node->last)
+	{
+		node->last=current_node->last;
+	}
+	else //if it's the first node
+	{
+		node->last=NULL;
+	}
+
+	current_node->last=target_node;
+	current_node->next=target_node->next;
+	target_node->next=current_node;
+	if(current_node->next) //current node will not be the last node in the list
+	{
+		node=(T_node*)current_node->next;
+		node->last=current_node;
+	}
+}
+
 //moves current node to the next node after deletion
 //becomes NULL if there are no nodes left
 void T_list_remove_node(T_node **current_node)
@@ -141,6 +203,11 @@ void T_list_remove_node(T_node **current_node)
 void T_list_node_set_data(T_node *current_node, void *data)
 {
 	current_node->data=data;
+}
+
+void* T_list_node_get_data(T_node *current_node)
+{
+	return current_node->data;
 }
 
 #endif /* TLIB_DOUBLE_LINKED_LIST_IMPLEMENTATION */

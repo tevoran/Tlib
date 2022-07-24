@@ -24,7 +24,8 @@ T_node* T_list_new_node(T_node *current_node);
 
 void T_list_move_node_after(T_node *current_node, T_node *target_node);
 
-void T_list_remove_node(T_node **current_node);
+void T_list_destroy_node(T_node **current_node);
+void T_list_remove_node_from_list(T_node *current_node);
 
 void T_list_node_set_data(T_node *current_node, void *data);
 void* T_list_node_get_data(T_node *current_node);
@@ -156,7 +157,7 @@ void T_list_move_node_after(T_node *current_node, T_node *target_node)
 
 //moves current node to the next node after deletion
 //becomes NULL if there are no nodes left
-void T_list_remove_node(T_node **current_node)
+void T_list_destroy_node(T_node **current_node)
 {
 	T_node *node;
 
@@ -199,6 +200,38 @@ void T_list_remove_node(T_node **current_node)
 	*current_node=node->next;
 	return;
 }
+
+//the node gets removed from the list but still points to its data
+void T_list_remove_node_from_list(T_node *current_node)
+{
+	T_node *node=NULL;
+	if(current_node->last && current_node->next) //default case
+	{
+		node=current_node->last;
+		node->next=current_node->next;
+		node=current_node->next;
+		node->last=current_node->last;
+		current_node->last=NULL;
+		current_node->next=NULL;
+		return;
+	}
+	if(!current_node->last && current_node->next) //first node
+	{
+		node=current_node->next;
+		node->last=NULL;
+		current_node->next=NULL;
+		return;
+	}
+	if(current_node->last && !current_node->next) //last node
+	{
+		node=current_node->last;
+		node->next=NULL;
+		current_node->last=NULL;
+		return;
+	}
+	return; //if the node is the sole node
+}
+
 
 void T_list_node_set_data(T_node *current_node, void *data)
 {

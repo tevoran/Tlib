@@ -35,7 +35,7 @@
     d.x = D_X;                                                              \
     d.y = D_Y;                                                              \
     c = FUNCTION(a, b);                                                     \
-    if(c.x == d.x && c.y == d.y && c.z == d.z)                                            \
+    if(c.x == d.x && c.y == d.y && c.z == d.z)                              \
     {                                                                       \
         printf("pass\n");                                                   \
     }                                                                       \

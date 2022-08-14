@@ -23,3 +23,6 @@ include_directories(.)
 #creating the tests
 file(GLOB_RECURSE "double-linked-list" SRC tests/double-linked-list/*.c)
 add_executable(double-linked-list WIN32 ${double-linked-list})
+
+file(GLOB_RECURSE "vector" SRC tests/math/vector.c)
+add_executable(vector WIN32 ${vector})

@@ -35,6 +35,7 @@ union T_vec2
 		f32 width;
 		f32 height;
 	};
+	f32 array[2];
 } typedef T_vec2;
 
 union T_vec3
@@ -57,6 +58,7 @@ union T_vec3
 		f32 height;
 		f32 depth;
 	};
+	f32 array[3];
 } typedef T_vec3;
 
 union T_vec4
@@ -75,63 +77,42 @@ union T_vec4
 		f32 b;
 		f32 a;
 	};
+	f32 array[4];
 } typedef T_vec4;
 
-//vec2
-static inline T_vec2 T_v2_add(T_vec2 a, T_vec2 b)
-{
-	T_vec2 c;
-	c.x = a.x + b.x;
-	c.y = a.y + b.y;
-	return c;
-}
+//macros
+#define VEC_ADD(TYPE, FUNCNAME)                                         \
+	static inline TYPE FUNCNAME(TYPE a, TYPE b)                         \
+	{                                                                   \
+		TYPE c;                                                         \
+		for(int i = 0; i < sizeof(TYPE)/sizeof(f32); i++)               \
+		{                                                               \
+			c.array[i] = a.array[i] + b.array[i];                       \
+		}		                                                        \
+		return c;                                                       \
+	}
 
-static inline T_vec2 T_v2_sub(T_vec2 a, T_vec2 b)
-{
-	T_vec2 c;
-	c.x = a.x - b.x;
-	c.y = a.y - b.y;
-	return c;
-}
+#define VEC_SUB(TYPE, FUNCNAME)                                         \
+    static inline TYPE FUNCNAME(TYPE a, TYPE b)                         \
+    {                                                                   \
+        TYPE c;                                                         \
+        for(int i = 0; i < sizeof(TYPE)/sizeof(f32); i++)               \
+        {                                                               \
+            c.array[i] = a.array[i] - b.array[i];                       \
+        }                                                               \
+        return c;                                                       \
+    }
+    
+//vec2
+VEC_ADD(T_vec2, T_v2_add);
+VEC_SUB(T_vec2, T_v2_sub);
 
 //vec3
-static inline T_vec3 T_v3_add(T_vec3 a, T_vec3 b)
-{
-	T_vec3 c;
-	c.x = a.x + b.x;
-	c.y = a.y + b.y;
-	c.z = a.z + b.z;
-	return c;
-}
-
-static inline T_vec3 T_v3_sub(T_vec3 a, T_vec3 b)
-{
-	T_vec3 c;
-	c.x = a.x - b.x;
-	c.y = a.y - b.y;
-	c.z = a.z - b.z;
-	return c;
-}
+VEC_ADD(T_vec3, T_v3_add);
+VEC_SUB(T_vec3, T_v3_sub);
 
 //vec4
-static inline T_vec4 T_v4_add(T_vec4 a, T_vec4 b)
-{
-	T_vec4 c;
-	c.x = a.x + b.x;
-	c.y = a.y + b.y;
-	c.z = a.z + b.z;
-	c.w = a.w + b.w;
-	return c;
-}
-
-static inline T_vec4 T_v4_sub(T_vec4 a, T_vec4 b)
-{
-	T_vec4 c;
-	c.x = a.x - b.x;
-	c.y = a.y - b.y;
-	c.z = a.z - b.z;
-	c.w = a.w - b.w;
-	return c;
-}
+VEC_ADD(T_vec4, T_v4_add);
+VEC_SUB(T_vec4, T_v4_sub);
 
 #endif /* TLIB_MATH_VECTOR */

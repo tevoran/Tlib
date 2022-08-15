@@ -94,4 +94,44 @@ static inline T_vec2 T_v2_sub(T_vec2 a, T_vec2 b)
 	return c;
 }
 
+//vec3
+static inline T_vec3 T_v3_add(T_vec3 a, T_vec3 b)
+{
+	T_vec3 c;
+	c.x = a.x + b.x;
+	c.y = a.y + b.y;
+	c.z = a.z + b.z;
+	return c;
+}
+
+static inline T_vec3 T_v3_sub(T_vec3 a, T_vec3 b)
+{
+	T_vec3 c;
+	c.x = a.x - b.x;
+	c.y = a.y - b.y;
+	c.z = a.z - b.z;
+	return c;
+}
+
+//vec4
+static inline T_vec4 T_v4_add(T_vec4 a, T_vec4 b)
+{
+	T_vec4 c;
+	c.x = a.x + b.x;
+	c.y = a.y + b.y;
+	c.z = a.z + b.z;
+	c.w = a.w + b.w;
+	return c;
+}
+
+static inline T_vec4 T_v4_sub(T_vec4 a, T_vec4 b)
+{
+	T_vec4 c;
+	c.x = a.x - b.x;
+	c.y = a.y - b.y;
+	c.z = a.z - b.z;
+	c.w = a.w - b.w;
+	return c;
+}
+
 #endif /* TLIB_MATH_VECTOR */

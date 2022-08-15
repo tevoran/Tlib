@@ -102,17 +102,31 @@ union T_vec4
         }                                                               \
         return c;                                                       \
     }
-    
+
+#define VEC_MUL_FLOAT(TYPE, FUNCNAME)                                   \
+    static inline TYPE FUNCNAME(TYPE a, f32 b)                          \
+    {                                                                   \
+        TYPE c;                                                         \
+        for(int i = 0; i < sizeof(TYPE)/sizeof(f32); i++)               \
+        {                                                               \
+            c.array[i] = a.array[i] * b;                                \
+        }                                                               \
+        return c;                                                       \
+    }
+
 //vec2
 VEC_ADD(T_vec2, T_v2_add);
 VEC_SUB(T_vec2, T_v2_sub);
+VEC_MUL_FLOAT(T_vec2, T_v2_mul_f);
 
 //vec3
 VEC_ADD(T_vec3, T_v3_add);
 VEC_SUB(T_vec3, T_v3_sub);
+VEC_MUL_FLOAT(T_vec3, T_v3_mul_f);
 
 //vec4
 VEC_ADD(T_vec4, T_v4_add);
 VEC_SUB(T_vec4, T_v4_sub);
+VEC_MUL_FLOAT(T_vec4, T_v4_mul_f);
 
 #endif /* TLIB_MATH_VECTOR */

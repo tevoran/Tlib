@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <Tlib/math.h>
-#include <stdbool.h>
+#include <Tlib/inttypes.h>
+
 
 #define TEST_VEC2(FUNCTION, A_X, A_Y, B_X, B_Y, D_X, D_Y)                   \
 {                                                                           \

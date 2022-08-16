@@ -7,6 +7,7 @@ extern "C" {
 
 #include "math/floattypes.h"
 #include "math/vector.h"
+#include "math/matrix.h"
 
 #endif /* TLIB_MATH */
 

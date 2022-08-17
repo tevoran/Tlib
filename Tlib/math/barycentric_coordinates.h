@@ -23,6 +23,7 @@ static inline T_vec3 T_get_barycentric_coords(
 		- (v1.x - current.x) * (v3.y - current.y))
 		/div;
 	out.array[2] = 1.0f - out.array[1] - out.array[0];
+	return out;
 }
 
 #endif /* TLIB_MATH_BARYCENTRIC_COORDINATES */

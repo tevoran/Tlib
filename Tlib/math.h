@@ -8,6 +8,7 @@ extern "C" {
 #include "math/floattypes.h"
 #include "math/vector.h"
 #include "math/matrix.h"
+#include "math/barycentric_coordinates.h"
 
 #endif /* TLIB_MATH */
 

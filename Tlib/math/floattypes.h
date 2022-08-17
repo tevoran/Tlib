@@ -1,7 +1,7 @@
-#ifndef TLIB_MATH_FLOAT
-#define TLIB_MATH_FLOAT
+#ifndef TLIB_MATH_FLOATTYPES
+#define TLIB_MATH_FLOATTYPES
 
 typedef float f32;
 typedef double f64;
 
-#endif /* TLIB_MATH_FLOAT */
+#endif /* TLIB_MATH_FLOATTYPES */

@@ -26,3 +26,6 @@ add_executable(double-linked-list WIN32 ${double-linked-list})
 
 file(GLOB_RECURSE "vector" SRC tests/math/vector.c)
 add_executable(vector WIN32 ${vector})
+
+file(GLOB_RECURSE "float" SRC tests/math/float.c)
+add_executable(float WIN32 ${float})

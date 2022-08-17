@@ -6,6 +6,7 @@ extern "C" {
 #define TLIB_MATH
 
 #include "math/floattypes.h"
+#include "math/float.h"
 #include "math/vector.h"
 #include "math/matrix.h"
 #include "math/barycentric_coordinates.h"

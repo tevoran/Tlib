@@ -3,7 +3,7 @@
 
 #include "floattypes.h"
 #include "../inttypes.h"
-#include "stdio.h"
+#include <stdio.h>
 
 /*
     In Tlib matrices are defined like this.
@@ -69,16 +69,38 @@ struct T_mat4
         return mat;                                                             \
     }
 
+#define MAT_MULTIPLY(TYPE, FUNCNAME, DIMENSION)                                 \
+    static inline TYPE FUNCNAME(TYPE a, TYPE b)                                 \
+    {                                                                           \
+        TYPE mat;                                                               \
+        for(u8 iy = 0; iy < DIMENSION; iy++)                                    \
+        {                                                                       \
+            for(u8 ix = 0; ix < DIMENSION; ix++)                                \
+            {                                                                   \
+                f32 value = 0.0f;                                               \
+                for(u8 i = 0; i < DIMENSION; i++)                               \
+                {                                                               \
+                    value += a.array[iy][i] * b.array[i][ix];                   \
+                }                                                               \
+                mat.array[iy][ix] = value;                                      \
+            }                                                                   \
+        }                                                                       \
+        return mat;                                                             \
+    }
+
 //mat2
 MAT_GET_CONTENT(T_mat2, T_m2_get_string, 2, 2);
 MAT_IDENTITY(T_mat2, T_m2_make_identity, 2, 2);
+MAT_MULTIPLY(T_mat2, T_m2_mul, 2);
 
 //mat3
 MAT_GET_CONTENT(T_mat3, T_m3_get_string, 3, 3);
 MAT_IDENTITY(T_mat3, T_m3_make_identity, 3, 3);
+MAT_MULTIPLY(T_mat3, T_m3_mul, 3);
 
 //mat4
 MAT_GET_CONTENT(T_mat4, T_m4_get_string, 4, 4);
 MAT_IDENTITY(T_mat4, T_m4_make_identity, 4, 4);
+MAT_MULTIPLY(T_mat4, T_m4_mul, 4);
 
 #endif /* TLIB_MATH_MATRIX */

@@ -36,4 +36,21 @@ int main(void)
 	char mat4_str[BUFFER_SIZE];
 	T_m4_get_string(mat4, mat4_str, BUFFER_SIZE);
 	printf("Making mat4 identity matrix: \n%s\n", mat4_str);
+
+	//matrix and vector multiplication
+	T_mat3 m_3;
+	T_vec3 v_3;
+	v_3.x = 1.0f;
+	v_3.y = 2.0f;
+	v_3.z = 3.0f;
+	m_3 = T_m3_make_identity();
+	m_3.array[2][0] = 2.0f;
+	m_3.array[2][1] = 1.0f;
+	T_m3_get_string(m_3, mat3_str, BUFFER_SIZE);
+	printf("Testing matrix and vector multiplicitaion: \n%s\n", mat3_str);
+	T_v3_get_string(v_3, mat3_str, BUFFER_SIZE);
+	printf("Vector pre multiplicitaion: \n%s\n", mat3_str);
+	v_3 = T_m3_v3_mul(m_3, v_3);
+	T_v3_get_string(v_3, mat3_str, BUFFER_SIZE);
+	printf("Vector post multiplicitaion: \n%s\n", mat3_str);
 }

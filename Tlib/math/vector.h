@@ -2,6 +2,8 @@
 #define TLIB_MATH_VECTOR
 
 #include "floattypes.h"
+#include "../inttypes.h"
+#include <stdio.h>
 
 union T_vec2
 {
@@ -81,6 +83,22 @@ union T_vec4
 } typedef T_vec4;
 
 //macros
+#define VEC_GET_STRING(TYPE, FUNCNAME)                                  \
+    static inline void FUNCNAME(TYPE vec, char *string, u16 num_element)\
+    {                                                                   \
+        if(num_element < sizeof(TYPE)/sizeof(f32) * 12)                 \
+        {                                                               \
+            return;                                                     \
+        }                                                               \
+                                                                        \
+        u16 offset = 0;                                                 \
+        for(u32 i = 0; i < sizeof(TYPE)/sizeof(f32); i++)               \
+        {                                                               \
+            offset += sprintf(&string[offset], "%f \n", vec.array[i]);  \
+        }                                                               \
+    }
+
+
 #define VEC_ADD(TYPE, FUNCNAME)                                         \
     static inline TYPE FUNCNAME(TYPE a, TYPE b)                         \
     {                                                                   \
@@ -115,16 +133,19 @@ union T_vec4
     }
 
 //vec2
+VEC_GET_STRING(T_vec2, T_v2_get_string);  
 VEC_ADD(T_vec2, T_v2_add);
 VEC_SUB(T_vec2, T_v2_sub);
 VEC_MUL_FLOAT(T_vec2, T_v2_mul_f);
 
 //vec3
+VEC_GET_STRING(T_vec3, T_v3_get_string);  
 VEC_ADD(T_vec3, T_v3_add);
 VEC_SUB(T_vec3, T_v3_sub);
 VEC_MUL_FLOAT(T_vec3, T_v3_mul_f);
 
 //vec4
+VEC_GET_STRING(T_vec4, T_v4_get_string);  
 VEC_ADD(T_vec4, T_v4_add);
 VEC_SUB(T_vec4, T_v4_sub);
 VEC_MUL_FLOAT(T_vec4, T_v4_mul_f);

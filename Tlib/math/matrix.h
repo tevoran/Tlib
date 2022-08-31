@@ -3,15 +3,20 @@
 
 #include "floattypes.h"
 #include "../inttypes.h"
+#include "vector.h"
 #include <stdio.h>
 
 /*
-    In Tlib matrices are defined like this.
+    In Tlib matrices are defined like this:
     A is a matrix with the first entry in the array field being
-    the column of the matrix. The second entry is the row.
+    the number of rows of the matrix. The second entry is the number of rows.
     This way A.array[3][2] would point to the entry in the
     fourth row and in the the third column. Since in C the first
     entry has the index zero.
+
+    The vectors are treated as column vectors. They have only one column with
+    a different amount of rows. A T_vec2 vector has 1 column and 2 rows in
+    that column. 
 */
 
 struct T_mat2
@@ -88,19 +93,37 @@ struct T_mat4
         return mat;                                                             \
     }
 
+#define MAT_VEC_MUL(TYPE_MAT, TYPE_VEC, FUNCNAME, DIMENSION)                    \
+    static inline TYPE_VEC FUNCNAME(TYPE_MAT mat, TYPE_VEC vec)                 \
+    {                                                                           \
+        TYPE_VEC vec_out;                                                       \
+        for(u8 i = 0; i < DIMENSION; i++)                                       \
+        {                                                                       \
+            vec_out.array[i] = 0.0f;                                            \
+            for(u8 j = 0; j < sizeof(TYPE_VEC)/sizeof(f32); j++)                \
+            {                                                                   \
+                vec_out.array[i] += mat.array[i][j] * vec.array[j];             \
+            }                                                                   \
+        }                                                                       \
+        return vec_out;                                                         \
+    }
+
 //mat2
 MAT_GET_CONTENT(T_mat2, T_m2_get_string, 2, 2);
 MAT_IDENTITY(T_mat2, T_m2_make_identity, 2, 2);
 MAT_MULTIPLY(T_mat2, T_m2_mul, 2);
+MAT_VEC_MUL(T_mat2, T_vec2, T_m2_v2_mul, 2);
 
 //mat3
 MAT_GET_CONTENT(T_mat3, T_m3_get_string, 3, 3);
 MAT_IDENTITY(T_mat3, T_m3_make_identity, 3, 3);
 MAT_MULTIPLY(T_mat3, T_m3_mul, 3);
+MAT_VEC_MUL(T_mat3, T_vec3, T_m3_v3_mul, 3);
 
 //mat4
 MAT_GET_CONTENT(T_mat4, T_m4_get_string, 4, 4);
 MAT_IDENTITY(T_mat4, T_m4_make_identity, 4, 4);
 MAT_MULTIPLY(T_mat4, T_m4_mul, 4);
+MAT_VEC_MUL(T_mat4, T_vec4, T_m4_v4_mul, 4);
 
 #endif /* TLIB_MATH_MATRIX */

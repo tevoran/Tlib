@@ -12,16 +12,16 @@ static inline T_vec3 T_get_barycentric_coords(
 {
 	T_vec3 out;
 	f32 div =
-		(v2.x - v1.x) * (v3.y - v2.y)
-		- (v2.y - v1.y) * (v3.x - v2.x);
+		1.0f / ((v2.x - v1.x) * (v3.y - v2.y)
+		- (v2.y - v1.y) * (v3.x - v2.x));
 	out.array[0] =
 		((v2.x - current.x) * (v3.y - current.y)
 		- (v3.x - current.x) * (v2.y - current.y))
-		/div;
+		*div;
 	out.array[1] =
 		((v3.x - current.x) * (v1.y - current.y)
 		- (v1.x - current.x) * (v3.y - current.y))
-		/div;
+		*div;
 	out.array[2] = 1.0f - out.array[1] - out.array[0];
 	return out;
 }

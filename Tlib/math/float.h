@@ -3,30 +3,20 @@
 
 static inline f32 T_f_min(f32 a, f32 b)
 {
-	f32 c;
 	if(a < b)
 	{
-		c = a;
+		return a;
 	}
-	else
-	{
-		c = b;
-	}
-	return c;
+	return b;
 }
 
 static inline f32 T_f_max(f32 a, f32 b)
 {
-	f32 c;
 	if(a > b)
 	{
-		c = a;
+		return a;
 	}
-	else
-	{
-		c = b;
-	}
-	return c;
+	return b;
 }
 
 #endif /* TLIB_MATH_FLOAT */
